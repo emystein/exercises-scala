@@ -1,4 +1,4 @@
-package ar.com.kamikazesoftware.hitcounter
+package ar.com.flow.hitcounter
 
 object EndpointHitCounterByTimestamp {
   def process(log: Seq[String]) : Map[String, Iterable[EndpointHitCount]] = {

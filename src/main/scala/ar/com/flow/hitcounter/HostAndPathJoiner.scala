@@ -1,4 +1,4 @@
-package ar.com.kamikazesoftware.hitcounter
+package ar.com.flow.hitcounter
 
 object HostAndPathJoiner {
   def join(logLine: String) : (String, String) = {

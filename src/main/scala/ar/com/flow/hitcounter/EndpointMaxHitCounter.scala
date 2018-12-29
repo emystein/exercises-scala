@@ -1,4 +1,4 @@
-package ar.com.kamikazesoftware.hitcounter
+package ar.com.flow.hitcounter
 
 object EndpointMaxHitCounter extends App {
   def maxBetweenTwoEndpointHits(e1: EndpointHitCount, e2: EndpointHitCount): EndpointHitCount = if (e1.count > e2.count) e1 else e2

@@ -1,4 +1,4 @@
-package ar.com.kamikazesoftware.hitcounter
+package ar.com.flow.hitcounter
 
 import org.scalatest.{BeforeAndAfter, FunSuite, Matchers}
 

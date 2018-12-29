@@ -1,6 +1,6 @@
-package ar.com.kamikazesoftware.hitcounter
+package ar.com.flow.hitcounter
 
-import org.scalatest.{AsyncFunSuite, FunSuite, Matchers}
+import org.scalatest.{AsyncFunSuite, Matchers}
 
 import scala.concurrent.Future
 
