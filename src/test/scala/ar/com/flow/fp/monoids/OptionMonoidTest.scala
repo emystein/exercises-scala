@@ -1,67 +1,29 @@
 package ar.com.flow.fp.monoids
 
+import org.scalatest.prop.TableDrivenPropertyChecks
 import org.scalatest.{FunSpec, Matchers}
 
-class OptionMonoidTest extends FunSpec with Matchers {
+class OptionMonoidTest extends FunSpec with TableDrivenPropertyChecks with Matchers {
   val optionMonoid = Monoids.optionMonoid[String]
+
+  val triples = Table(
+    ("A", "B", "C"),
+    (Some("Happy"), Some("New"), Some("Year")),
+    (Some("Happy"), Some("New"), None),
+    (Some("Happy"), None, Some("Year")),
+    (None, Some("New"), Some("Year")),
+    (Some("Happy"), None, None),
+    (None, Some("New"), None),
+    (None, None, Some("Year")),
+    (None, None, None)
+  )
 
   describe("Option Monoid") {
     describe("Op") {
-      it("should associative three Some operators") {
-        val v1 = Some("Happy")
-        val v2 = Some("New")
-        val v3 = Some("Year")
-
-        optionMonoid.op(optionMonoid.op(v1, v2), v3) shouldBe optionMonoid.op(v1, optionMonoid.op(v2, v3))
-      }
-      it("should associative Some, Some and None") {
-        val v1 = Some("Happy")
-        val v2 = Some("New")
-        val v3 = None
-
-        optionMonoid.op(optionMonoid.op(v1, v2), v3) shouldBe optionMonoid.op(v1, optionMonoid.op(v2, v3))
-      }
-      it("should associative Some, None and Some") {
-        val v1 = Some("Happy")
-        val v2 = None
-        val v3 = Some("Year")
-
-        optionMonoid.op(optionMonoid.op(v1, v2), v3) shouldBe optionMonoid.op(v1, optionMonoid.op(v2, v3))
-      }
-      it("should associative None, Some and Some") {
-        val v1 = None
-        val v2 = Some("New")
-        val v3 = Some("Year")
-
-        optionMonoid.op(optionMonoid.op(v1, v2), v3) shouldBe optionMonoid.op(v1, optionMonoid.op(v2, v3))
-      }
-      it("should associative Some, None and None") {
-        val v1 = Some("Happy")
-        val v2 = None
-        val v3 = None
-
-        optionMonoid.op(optionMonoid.op(v1, v2), v3) shouldBe optionMonoid.op(v1, optionMonoid.op(v2, v3))
-      }
-      it("should associative None, Some and None") {
-        val v1 = None
-        val v2 = Some("New")
-        val v3 = None
-
-        optionMonoid.op(optionMonoid.op(v1, v2), v3) shouldBe optionMonoid.op(v1, optionMonoid.op(v2, v3))
-      }
-      it("should associative None, None and Some") {
-        val v1 = None
-        val v2 = None
-        val v3 = Some("Year")
-
-        optionMonoid.op(optionMonoid.op(v1, v2), v3) shouldBe optionMonoid.op(v1, optionMonoid.op(v2, v3))
-      }
-      it("should associative None, None and None") {
-        val v1 = None
-        val v2 = None
-        val v3 = None
-
-        optionMonoid.op(optionMonoid.op(v1, v2), v3) shouldBe optionMonoid.op(v1, optionMonoid.op(v2, v3))
+      it("should associate values") {
+        forAll(triples) { (v1: Option[String], v2: Option[String], v3: Option[String]) =>
+          optionMonoid.op(optionMonoid.op(v1, v2), v3) shouldBe optionMonoid.op(v1, optionMonoid.op(v2, v3))
+        }
       }
     }
     describe("Zero") {
