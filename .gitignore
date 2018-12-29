@@ -1,0 +1,12 @@
+target
+project
+build
+.idea
+*.iml
+.project
+.pydevproject
+.cache
+nb-configuration.xml
+.DS_Store
+
+
