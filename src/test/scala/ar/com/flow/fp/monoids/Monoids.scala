@@ -28,10 +28,27 @@ object Monoids {
     override def op(int1: Int, int2: Int): Int = int1 + int2
   }
 
-  def foldMap[A,B](as: List[A], m: Monoid[B])(f: A => B): B = {
+  def stringConcatenateMonoid: Monoid[String] = new Monoid[String] {
+    override def zero: String = ""
+
+    override def op(s1: String, s2: String): String = s1 + s2
+  }
+
+  def foldMap[A, B](as: List[A], m: Monoid[B])(f: A => B): B = {
     as match {
       case Nil => m.zero
       case head +: tail => m.op(f(head), foldMap(tail, m)(f))
+    }
+  }
+
+  // Balanced foldMap
+  def foldMapV[A, B](as: List[A], m: Monoid[B])(f: A => B): B = {
+    as match {
+      case Nil => m.zero
+      case head +: Nil => f(head)
+      case head +: tail =>
+        val (leftBranch, rightBranch) = as.splitAt(as.length / 2)
+        m.op(foldMapV(leftBranch, m)(f), foldMapV(rightBranch, m)(f))
     }
   }
 }
