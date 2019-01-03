@@ -21,4 +21,17 @@ object Monoids {
       a1.andThen(a2)
     }
   }
+
+  def intSumMonoid: Monoid[Int] = new Monoid[Int] {
+    override def zero: Int = 0
+
+    override def op(int1: Int, int2: Int): Int = int1 + int2
+  }
+
+  def foldMap[A,B](as: List[A], m: Monoid[B])(f: A => B): B = {
+    as match {
+      case Nil => m.zero
+      case head +: tail => m.op(f(head), foldMap(tail, m)(f))
+    }
+  }
 }
