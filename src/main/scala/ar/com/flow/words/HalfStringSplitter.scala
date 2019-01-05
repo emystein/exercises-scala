@@ -2,11 +2,15 @@ package ar.com.flow.words
 
 object HalfStringSplitter {
   def splitWithoutCuttingWords(string: String): (String, String) = {
-    val (l, r) = string.splitAt(string.length / 2)
+    val (left, right) = string.splitAt(string.length / 2)
 
-    val left = l + (if (r.contains(' ')) r.substring(0, r.indexOf(' ')) else r)
-    val right = if (r.contains(' ')) r.substring(r.indexOf(' ') + 1) else ""
+    val rightFirstSpaceIndex = right.indexOf(' ')
 
-    (left, right)
+    if (rightFirstSpaceIndex >= 0) {
+      val rightSplitAtFirstSpace = right.splitAt(rightFirstSpaceIndex)
+      (left + rightSplitAtFirstSpace._1, rightSplitAtFirstSpace._2.drop(1))
+    } else {
+      (left + right, "")
+    }
   }
 }
