@@ -1,4 +1,4 @@
-package ar.com.flow.fp.monoids
+package ar.com.flow
 
 trait Monoid[A] {
   def zero: A

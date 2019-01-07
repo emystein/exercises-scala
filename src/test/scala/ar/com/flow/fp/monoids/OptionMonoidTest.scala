@@ -1,5 +1,6 @@
 package ar.com.flow.fp.monoids
 
+import ar.com.flow.Monoids
 import org.scalatest.prop.TableDrivenPropertyChecks
 import org.scalatest.{FunSpec, Matchers}
 

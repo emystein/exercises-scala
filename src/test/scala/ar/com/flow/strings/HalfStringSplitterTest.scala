@@ -1,4 +1,4 @@
-package ar.com.flow.words
+package ar.com.flow.strings
 
 import org.scalatest.{FunSpec, Matchers}
 import HalfStringSplitter.splitWithoutCuttingWords
@@ -22,12 +22,12 @@ class HalfStringSplitterTest extends FunSpec with Matchers {
     }
     describe("Splitting two words with middle being a space") {
       it("should return the first word in the first half and the second word in the right half") {
-        splitWithoutCuttingWords("Jamón Jamón") shouldBe ("Jamón", " Jamón")
+        splitWithoutCuttingWords("Jamón Jamón") shouldBe ("Jamón", "Jamón")
       }
     }
     describe("Splitting three words string with middle of string being non-space") {
       it("should return two words in the left half and third word in the right half") {
-        splitWithoutCuttingWords("A perfect circle") shouldBe ("A perfect", " circle")
+        splitWithoutCuttingWords("A perfect circle") shouldBe ("A perfect", "circle")
       }
     }
   }

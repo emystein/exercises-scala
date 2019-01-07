@@ -1,4 +1,4 @@
-package ar.com.flow.fp.monoids
+package ar.com.flow
 
 object Strings {
   def replaceSpaceWithUnderscore: String => String = { a: String => a.replaceAll(" ", "_") }

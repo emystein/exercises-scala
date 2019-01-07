@@ -1,4 +1,4 @@
-package ar.com.flow
+package ar.com.flow.strings
 
 import org.scalatest.prop.TableDrivenPropertyChecks
 import org.scalatest.{FunSpec, Matchers}

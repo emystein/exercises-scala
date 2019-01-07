@@ -1,5 +1,6 @@
 package ar.com.flow.fp.monoids
 
+import ar.com.flow.Strings
 import org.scalatest.{FunSpec, Matchers}
 
 class ExclaimWordsTest extends FunSpec with Matchers {
