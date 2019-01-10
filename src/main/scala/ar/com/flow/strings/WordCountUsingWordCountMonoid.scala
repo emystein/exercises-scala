@@ -7,15 +7,11 @@ import ar.com.flow.Strings._
 object WordCountUsingWordCountMonoid {
 
   def apply(string: String): Int = {
-    if (string.isEmpty) {
-      0
-    } else {
-      val wc: WC = recursiveWC(string)
+    val wc: WC = recursiveWC(string)
 
-      wc match {
-        case Stub(s) => apply(s)
-        case Part(_, w, _) => w
-      }
+    wc match {
+      case Stub(_) => 0
+      case Part(_, w, _) => w
     }
   }
 
