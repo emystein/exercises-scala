@@ -6,4 +6,7 @@ object Strings {
   def toUpperCase: String => String = { a: String => a.toUpperCase }
 
   val concatenate: (String, String) => String = (s1: String, s2: String) => s1 + s2
+
+  val ltrim = (s: String) => s.replaceAll("^\\s+", "")
+  val rtrim = (s: String) => s.replaceAll("\\s+$", "")
 }
