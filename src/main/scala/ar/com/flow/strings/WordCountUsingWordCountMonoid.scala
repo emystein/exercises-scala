@@ -5,7 +5,6 @@ import ar.com.flow.Monoids.{Part, Stub, WC}
 import ar.com.flow.Strings._
 
 object WordCountUsingWordCountMonoid {
-  implicit def bool2int(b: Boolean) = if (b) 1 else 0
 
   def apply(string: String): Int = {
     if (string.isEmpty) {
@@ -29,12 +28,11 @@ object WordCountUsingWordCountMonoid {
       Part("", 1, "")
     } else {
       val (left, right) = string.splitAt(string.length / 2)
-      val middleWordFound = string.charAt(string.length / 2) != ' '
+      val leftMinusWord = if (left.contains(' ') && !left.endsWith(" ")) left.take(left.lastIndexOf(' ') + 1) else left
+      val rightMinusWord = if (right.contains(' ') && !right.startsWith(" ")) right.drop(right.indexOf(' ')) else right
+      val middleWordFound = (leftMinusWord + rightMinusWord) != string
 
       if (middleWordFound) {
-        val leftMinusWord = if (left.contains(' ') && !left.endsWith(" ")) left.take(left.lastIndexOf(' ') + 1) else left
-        val rightMinusWord = if (right.contains(' ') && !right.startsWith(" ")) right.drop(right.indexOf(' ')) else right
-
         Monoids.wcMonoid.op(Monoids.wcMonoid.op(Part("", 1, ""), recursiveWC(leftMinusWord)), recursiveWC(rightMinusWord))
       } else {
         Monoids.wcMonoid.op(recursiveWC(left), recursiveWC(right))

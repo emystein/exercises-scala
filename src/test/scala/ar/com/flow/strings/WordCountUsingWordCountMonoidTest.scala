@@ -9,8 +9,9 @@ class WordCountUsingWordCountMonoidTest extends FunSpec with TableDrivenProperty
     ("", 0),
     ("1", 1),
     ("1 2", 2),
-    ("1 2 3", 3),
     ("12 3", 2),
+    ("1 23", 2),
+    ("1 2 3", 3),
     ("1 23 4", 3),
     ("1 234 5 ", 3),
   )
