@@ -24,7 +24,7 @@ object Strings {
       val (left, right) = string.splitAt(string.length / 2)
       val leftMinusItsLastWord = left.take(left.lastIndexOf(' ') + 1)
       val rightMinusItsFirstWord = right.drop(right.indexOf(' '))
-      val middleWord = string.substring(leftMinusItsLastWord.size, string.size - rightMinusItsFirstWord.size)
+      val middleWord = string.substring(leftMinusItsLastWord.length, string.length - rightMinusItsFirstWord.length)
       (leftMinusItsLastWord, middleWord, rightMinusItsFirstWord)
     }
   }
