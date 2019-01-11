@@ -1,6 +1,6 @@
 package ar.com.flow.strings
 
-import ar.com.flow.Monoids
+import ar.com.flow.{Monoids, Strings}
 import ar.com.flow.Monoids.{Part, Stub, WC}
 import ar.com.flow.Strings._
 
@@ -23,16 +23,15 @@ object WordCountUsingWordCountMonoid {
     } else if (!string.contains(' ')) {
       Part("", 1, "")
     } else {
-      val (left, right) = string.splitAt(string.length / 2)
-      val leftMinusWord = left.take(left.lastIndexOf(' ') + 1)
-      val rightMinusWord = right.drop(right.indexOf(' '))
-      val middleWordFound = (leftMinusWord + rightMinusWord) != string
+      val (leftMinusItsLastWord, middleWord, rightMinusItsFirstWord) = Strings.splitByMiddleWord(string)
+      val middleWordFound = !middleWord.isEmpty
 
       if (middleWordFound) {
-        Monoids.wcMonoid.op(Monoids.wcMonoid.op(Part("", 1, ""), wordCount(leftMinusWord)), wordCount(rightMinusWord))
+        Monoids.wcMonoid.op(Monoids.wcMonoid.op(Part("", 1, ""), wordCount(leftMinusItsLastWord)), wordCount(rightMinusItsFirstWord))
       } else {
-        Monoids.wcMonoid.op(wordCount(left), wordCount(right))
+        Monoids.wcMonoid.op(wordCount(leftMinusItsLastWord), wordCount(rightMinusItsFirstWord))
       }
     }
   }
+
 }
