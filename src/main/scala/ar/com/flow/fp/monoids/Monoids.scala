@@ -1,4 +1,4 @@
-package ar.com.flow
+package ar.com.flow.fp.monoids
 
 object Monoids {
   def optionMonoid[A]: Monoid[Option[A]] = new Monoid[Option[A]] {

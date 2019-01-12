@@ -1,6 +1,5 @@
 package ar.com.flow.fp.monoids
 
-import ar.com.flow.{Monoid, Monoids}
 import ar.com.flow.Strings._
 import org.scalatest.{FunSpec, Matchers}
 

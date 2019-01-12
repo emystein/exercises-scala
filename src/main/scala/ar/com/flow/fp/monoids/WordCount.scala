@@ -1,7 +1,6 @@
 package ar.com.flow.fp.monoids
 
 import ar.com.flow.BooleanImplicits._
-import ar.com.flow.Monoid
 import ar.com.flow.Strings.{ltrim, rtrim, splitByMiddleWord}
 
 sealed trait WordCount

@@ -1,7 +1,7 @@
 package ar.com.flow.fp.monoids
 
+import ar.com.flow.fp.monoids.Monoids._
 import org.scalatest.{FunSpec, Matchers}
-import ar.com.flow.Monoids._
 
 class BalancedFoldMapTest extends FunSpec with Matchers {
 
