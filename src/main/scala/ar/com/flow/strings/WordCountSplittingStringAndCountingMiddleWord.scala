@@ -2,13 +2,10 @@ package ar.com.flow.strings
 
 import ar.com.flow.Strings
 import ar.com.flow.Strings._
-import BoolImplicits._
-import ar.com.flow.WCImplicits.reduceWCToNumber
-import WordCountUsingWordCountMonoid.wordCount
+import ar.com.flow.BooleanImplicits._
 
-object RecursiveWordCount {
-  // TODO add tests
-  def countWords(input: String): Int = {
+object WordCountSplittingStringAndCountingMiddleWord {
+  def apply(input: String): Int = {
     val string = ltrim(rtrim(input))
 
     if (string.isEmpty) {
@@ -18,7 +15,7 @@ object RecursiveWordCount {
     } else {
       val (leftMinusItsLastWord, middleWord, rightMinusItsFirstWord) = Strings.splitByMiddleWord(string)
 
-      bool2int(!middleWord.isEmpty) + wordCount(leftMinusItsLastWord) + wordCount(rightMinusItsFirstWord)
+      bool2int(!middleWord.isEmpty) + apply(leftMinusItsLastWord) + apply(rightMinusItsFirstWord)
     }
   }
 }

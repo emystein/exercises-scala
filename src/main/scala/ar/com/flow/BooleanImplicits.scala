@@ -1,5 +1,5 @@
-package ar.com.flow.strings
+package ar.com.flow
 
-object BoolImplicits {
+object BooleanImplicits {
   implicit def bool2int(b: Boolean) = if (b) 1 else 0
 }
