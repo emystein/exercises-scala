@@ -3,6 +3,7 @@ package ar.com.flow.strings
 import org.scalatest.prop.TableDrivenPropertyChecks
 import org.scalatest.{FunSpec, Matchers}
 
+// TODO reuse for WordCountUsingWordCountMonoid2
 class WordCountUsingWordCountMonoidTest extends FunSpec with TableDrivenPropertyChecks with Matchers {
   val table = Table(
     ("String", "Expected"),

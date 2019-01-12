@@ -1,19 +1,15 @@
 package ar.com.flow.strings
 
-import ar.com.flow.{Monoids, Strings}
 import ar.com.flow.Monoids.{Part, Stub, WC}
 import ar.com.flow.Strings._
+import ar.com.flow.WCImplicits._
+import ar.com.flow.strings.BoolImplicits._
+import ar.com.flow.{Monoids, Strings}
 
 object WordCountUsingWordCountMonoid {
-  implicit def bool2int(b: Boolean) = if (b) 1 else 0
 
   def apply(string: String): Int = {
-    val wc: WC = wordCount(string)
-
-    wc match {
-      case Stub(_) => 0
-      case Part(_, w, _) => w
-    }
+    wordCount(string)
   }
 
   def wordCount(input: String): WC = {
@@ -26,8 +22,9 @@ object WordCountUsingWordCountMonoid {
     } else {
       val (leftMinusItsLastWord, middleWord, rightMinusItsFirstWord) = Strings.splitByMiddleWord(string)
 
-      Monoids.wcMonoid.op(Monoids.wcMonoid.op(Part("", !middleWord.isEmpty, ""), wordCount(leftMinusItsLastWord)), wordCount(rightMinusItsFirstWord))
+      val mergedWC = Monoids.wcMonoid.op(wordCount(leftMinusItsLastWord), wordCount(rightMinusItsFirstWord))
+
+      Monoids.wcMonoid.op(Part("", !middleWord.isEmpty, ""), mergedWC)
     }
   }
-
 }
