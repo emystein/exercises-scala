@@ -1,7 +1,7 @@
 package ar.com.flow.fp.monoids
 
 import ar.com.flow.fp.monoids.WordCount.wordCountMonoid
-import ar.com.flow.fp.monoids.WordCountImplicits.stringToWC
+import ar.com.flow.fp.monoids.WordCountImplicits.stringToWordCount
 
 object WordCountUsingMonoidAndImplicits {
 

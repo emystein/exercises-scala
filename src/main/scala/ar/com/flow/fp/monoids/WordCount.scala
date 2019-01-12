@@ -1,8 +1,8 @@
 package ar.com.flow.fp.monoids
 
-import ar.com.flow.{Monoid, Strings}
-import ar.com.flow.Strings.{ltrim, rtrim}
 import ar.com.flow.BooleanImplicits._
+import ar.com.flow.Monoid
+import ar.com.flow.Strings.{ltrim, rtrim, splitByMiddleWord}
 
 sealed trait WordCount
 
@@ -10,14 +10,13 @@ case class Stub(chars: String) extends WordCount
 case class Part(lStub: String, words: Int, rStub: String) extends WordCount
 
 object Part {
-  def apply(string: String): Part = {
-    val (left, middleWord, right) = Strings.splitByMiddleWord(string)
+  def create(left: String, middleWord: String, right: String)= {
     Part(left, !middleWord.isEmpty, right)
   }
 }
 
 object WordCount {
-  def wordCountMonoid: Monoid[WordCount] = new Monoid[WordCount] {
+  def wordCountMonoid = new Monoid[WordCount] {
     override def zero: WordCount = Stub("")
 
     override def op(wc1: WordCount, wc2: WordCount): WordCount = {
@@ -33,7 +32,7 @@ object WordCount {
 
 object WordCountImplicits {
   // TODO add tests
-  implicit def stringToWC(input: String): WordCount = {
+  implicit def stringToWordCount(input: String)= {
     val string = ltrim(rtrim(input))
 
     if (string.isEmpty) {
@@ -41,7 +40,7 @@ object WordCountImplicits {
     } else if (!string.contains(' ')) {
       Part("", 1, "")
     } else {
-      Part(string)
+      (Part.create _).tupled(splitByMiddleWord(string))
     }
   }
 }
