@@ -22,11 +22,8 @@ object WordCountUsingMonoid {
     } else if (!string.contains(' ')) {
       Part("", 1, "")
     } else {
-      val (leftMinusItsLastWord, middleWord, rightMinusItsFirstWord) = Strings.splitByMiddleWord(string)
-
-      val mergedWC = wordCountMonoid.op(wordCount(leftMinusItsLastWord), wordCount(rightMinusItsFirstWord))
-
-      wordCountMonoid.op(Part("", !middleWord.isEmpty, ""), mergedWC)
+      val (left, middleWord, right) = Strings.splitByMiddleWord(string)
+      wordCountMonoid.op(Part("", !middleWord.isEmpty, ""), wordCountMonoid.op(wordCount(left), wordCount(right)))
     }
   }
 }

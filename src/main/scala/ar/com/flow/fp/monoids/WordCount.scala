@@ -9,6 +9,13 @@ sealed trait WordCount
 case class Stub(chars: String) extends WordCount
 case class Part(lStub: String, words: Int, rStub: String) extends WordCount
 
+object Part {
+  def apply(string: String): Part = {
+    val (left, middleWord, right) = Strings.splitByMiddleWord(string)
+    Part(left, !middleWord.isEmpty, right)
+  }
+}
+
 object WordCount {
   def wordCountMonoid: Monoid[WordCount] = new Monoid[WordCount] {
     override def zero: WordCount = Stub("")
@@ -34,8 +41,7 @@ object WordCountImplicits {
     } else if (!string.contains(' ')) {
       Part("", 1, "")
     } else {
-      val (leftMinusItsLastWord, middleWord, rightMinusItsFirstWord) = Strings.splitByMiddleWord(string)
-      Part(leftMinusItsLastWord, !middleWord.isEmpty, rightMinusItsFirstWord)
+      Part(string)
     }
   }
 }
