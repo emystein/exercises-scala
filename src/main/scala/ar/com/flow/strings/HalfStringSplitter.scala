@@ -6,7 +6,7 @@ object HalfStringSplitter {
 
     if (rightHalf.contains(' ')) {
       val (resultLeft, resultRight) = string.splitAt((string.length / 2) + rightHalf.indexOf(' '))
-      (resultLeft, resultRight.drop(1)) // drop first space in resultRight
+      (resultLeft, resultRight)
     } else {
       (string, "")
     }

@@ -30,8 +30,7 @@ object WordCount {
 }
 
 object WordCountImplicits {
-  // TODO add tests
-  implicit def stringToWordCount(input: String)= {
+  implicit def stringToWordCount(input: String): WordCount = {
     val string = ltrim(rtrim(input))
 
     if (string.isEmpty) {

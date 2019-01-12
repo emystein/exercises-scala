@@ -1,4 +1,4 @@
-package ar.com.flow.fp.monoids
+package ar.com.flow.strings
 
 import ar.com.flow.Strings
 import org.scalatest.{FunSpec, Matchers}
