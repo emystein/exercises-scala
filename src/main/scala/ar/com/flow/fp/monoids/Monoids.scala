@@ -51,4 +51,10 @@ object Monoids {
         m.op(foldMapV(leftBranch, m)(f), foldMapV(rightBranch, m)(f))
     }
   }
+
+  def productMonoid[A, B](A: Monoid[A], B: Monoid[B]): Monoid[(A, B)] = new Monoid[(A, B)] {
+    override def zero: (A, B) = (A.zero, B.zero)
+
+    override def op(a1: (A, B), a2: (A, B)): (A, B) = (A.op(a1._1, a2._1), B.op(a1._2, a2._2))
+  }
 }
