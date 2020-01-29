@@ -1,4 +1,4 @@
-package ar.com.flow.fp.manning
+package ar.com.flow.fp.manning.chapter3
 
 object Chapter3Exercises {
   def append[A](a1: List[A], a2: List[A]): List[A] = {
@@ -124,6 +124,22 @@ object Chapter3Exercises {
       case (Nil, xs) => xs
       case (xs, Nil) => xs
       case (x :: xs, y :: ys) => f(x, y) :: zipWith(xs, ys)(f)
+    }
+  }
+
+  def isPrefix[A](potentialPrefix: List[A], list: List[A]): Boolean = {
+    potentialPrefix match {
+      case Nil => true
+      case x :: xs => list.nonEmpty && x == list.head && isPrefix(xs, list.tail)
+    }
+  }
+
+  def hasSubsequence[A](sup: List[A], sub: List[A]): Boolean = {
+    (sub, sup) match {
+      case (Nil, Nil) => true
+      case (Nil, xs) => true
+      case (xs, Nil) => false
+      case (sb, sp) => isPrefix(sb, sp) || hasSubsequence(sb, sp.tail)
     }
   }
 }

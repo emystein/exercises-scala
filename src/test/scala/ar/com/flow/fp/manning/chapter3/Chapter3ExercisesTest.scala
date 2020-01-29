@@ -1,6 +1,6 @@
-package ar.com.flow.fp.manning
+package ar.com.flow.fp.manning.chapter3
 
-import ar.com.flow.fp.manning.Chapter3Exercises._
+import Chapter3Exercises._
 import org.scalatest.{FunSuite, Matchers}
 
 class Chapter3ExercisesTest extends FunSuite with Matchers {
@@ -21,7 +21,7 @@ class Chapter3ExercisesTest extends FunSuite with Matchers {
     reverseUsingFoldRight(List(1, 2, 3)) shouldBe List(3, 2, 1)
   }
 
-test("foldLeft") {
+  test("foldLeft") {
     foldLeft(list, 6)(_ / _) shouldBe 1
   }
 
@@ -96,5 +96,9 @@ test("foldLeft") {
 
   test("custom zipWith") {
     zipWith(List(1, 2, 3), List(4, 5, 6))((x, y) => x + y) shouldBe List(5, 7, 9)
+  }
+
+  test("hasSubsequence") {
+    hasSubsequence(List(1, 2, 3), List(1)) shouldBe true
   }
 }
