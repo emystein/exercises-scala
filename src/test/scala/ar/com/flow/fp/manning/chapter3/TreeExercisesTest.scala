@@ -1,6 +1,6 @@
 package ar.com.flow.fp.manning.chapter3
 
-import ar.com.flow.fp.manning.chapter3.TreeExercises.maximum
+import ar.com.flow.fp.manning.chapter3.TreeExercises._
 import org.scalatest.{FunSuite, Matchers}
 import org.scalatest.prop.TableDrivenPropertyChecks._
 
@@ -27,4 +27,31 @@ class TreeExercisesTest extends FunSuite with Matchers {
   forAll(maximumValues) { (tree: Tree[Int], max: Int) =>
     maximum(tree) shouldBe max
   }
+
+  val depthValues = Table(
+    ("tree", "expectedDepth"),
+    (Leaf(1), 1),
+    (Branch(Leaf(1), Leaf(2)), 2),
+    (Branch(Leaf(3), Branch(Leaf(1), Leaf(2))), 3),
+    (Branch(Branch(Leaf(1), Leaf(2)), Leaf(3)), 3),
+    (Branch(Branch(Leaf(1), Leaf(2)), Branch(Leaf(3), Leaf(4))), 3)
+  )
+
+  forAll(depthValues) { (tree: Tree[Int], expectedDepth: Int) =>
+    depth(tree) shouldBe expectedDepth
+  }
+
+  val mapValues = Table(
+    ("tree", "expected"),
+    (Leaf(1), Leaf(2)),
+    (Branch(Leaf(1), Leaf(2)), Branch(Leaf(2), Leaf(3))),
+    (Branch(Leaf(1), Branch(Leaf(2), Leaf(3))), Branch(Leaf(2), Branch(Leaf(3), Leaf(4)))),
+    (Branch(Branch(Leaf(1), Leaf(2)), Leaf(3)), Branch(Branch(Leaf(2), Leaf(3)), Leaf(4))),
+    (Branch(Branch(Leaf(1), Leaf(2)), Branch(Leaf(3), Leaf(4))), Branch(Branch(Leaf(2), Leaf(3)), Branch(Leaf(4), Leaf(5))))
+  )
+
+  forAll(mapValues) { (tree: Tree[Int], expected: Tree[Int]) =>
+    map(tree)((v:Int) => v + 1) shouldBe expected
+  }
+
 }
