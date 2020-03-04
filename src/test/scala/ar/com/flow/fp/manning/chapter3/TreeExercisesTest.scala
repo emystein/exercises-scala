@@ -41,7 +41,7 @@ class TreeExercisesTest extends FunSuite with Matchers {
     depth(tree) shouldBe expectedDepth
   }
 
-  val mapValues = Table(
+  val plusOneValues = Table(
     ("tree", "expected"),
     (Leaf(1), Leaf(2)),
     (Branch(Leaf(1), Leaf(2)), Branch(Leaf(2), Leaf(3))),
@@ -50,8 +50,7 @@ class TreeExercisesTest extends FunSuite with Matchers {
     (Branch(Branch(Leaf(1), Leaf(2)), Branch(Leaf(3), Leaf(4))), Branch(Branch(Leaf(2), Leaf(3)), Branch(Leaf(4), Leaf(5))))
   )
 
-  forAll(mapValues) { (tree: Tree[Int], expected: Tree[Int]) =>
+  forAll(plusOneValues) { (tree: Tree[Int], expected: Tree[Int]) =>
     map(tree)((v:Int) => v + 1) shouldBe expected
   }
-
 }
