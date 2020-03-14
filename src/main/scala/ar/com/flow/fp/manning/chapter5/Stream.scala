@@ -27,7 +27,7 @@ sealed trait Stream[+A] {
         if (p(h())) {
           Cons(h, () => t().takeWhile(p))
         } else {
-          t()
+          Stream.empty
         }
       }
     }
@@ -49,8 +49,23 @@ sealed trait Stream[+A] {
     }
   }
 
+  def forAll(p: A => Boolean): Boolean = this match {
+    case Empty => true
+    case Cons(h, t) => {
+      if (p(h())) {
+        t().forAll(p)
+      } else {
+        false
+      }
+    }
+  }
+
   def headOptionUsingFoldRight: Option[A] = {
     foldRight[Option[A]](None)((a, b) => Some(a))
+  }
+
+  def from(n: Int): Stream[Int] = {
+    Stream.cons(n, from(n + 1))
   }
 }
 
@@ -70,4 +85,5 @@ object Stream {
   def apply[A](as: A*): Stream[A] =
     if (as.isEmpty) empty else cons(as.head, apply(as.tail: _*))
 }
+
 

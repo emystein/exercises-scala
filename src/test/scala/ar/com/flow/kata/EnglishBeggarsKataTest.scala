@@ -1,4 +1,4 @@
-package ar.com.flow
+package ar.com.flow.kata
 
 import org.scalatest.{FlatSpec, Matchers}
 

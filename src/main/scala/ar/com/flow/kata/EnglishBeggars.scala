@@ -1,4 +1,4 @@
-package ar.com.flow
+package ar.com.flow.kata
 
 import scala.util.Try
 
