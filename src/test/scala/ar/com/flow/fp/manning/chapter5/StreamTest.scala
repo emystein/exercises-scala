@@ -41,7 +41,6 @@ class StreamTest extends FunSuite with Matchers {
   test("from 1") {
     stream123.from(1).take(3).toList shouldBe List(1, 2, 3)
   }
-  // TODO
   test("fibs 0") {
     fibs.take(1).toList shouldBe List(0)
   }
@@ -56,5 +55,25 @@ class StreamTest extends FunSuite with Matchers {
   }
   test("fibs 4") {
     fibs.take(5).toList shouldBe List(0, 1, 1, 2, 3)
+  }
+  test("ones in terms of unfold") {
+    val ones = Stream.unfold(1)(s => Some((s, s)))
+
+    ones.take(3).toList shouldBe List(1, 1, 1)
+  }
+  test("constant in terms of unfold") {
+    def constant(n: Int) = Stream.unfold(n)(s => Some((s, s)))
+
+    constant(2).take(3).toList shouldBe List(2, 2, 2)
+  }
+  test("from in terms of unfold") {
+    def from(n: Int) = Stream.unfold(n)(s => Some((s, s + 1)))
+
+    from(1).take(3).toList shouldBe List(1, 2, 3)
+  }
+  test("fibs in terms of unfold") {
+    val fibs = Stream.unfold((0, 1)){case (a, b) => Some((a, (b, (a + b))))}
+
+    fibs.take(7).toList shouldBe List(0, 1, 1, 2, 3, 5, 8)
   }
 }
