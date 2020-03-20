@@ -1,5 +1,7 @@
 package ar.com.flow.kata
 
+// https://www.codewars.com/kata/559b8e46fa060b2c6a0000bf
+
 import PascalTriangle.topRow
 
 object PascalTriangle {
@@ -16,8 +18,6 @@ case class Diagonal(row: Int, diagonal: Int) {
   def nodes: List[Node] =
     if (row == topRow && diagonal != 0) {
       List.empty
-    } else if (row == topRow) {
-      List(Node(row = topRow, column = 1))
     } else {
       val start = Node(row, column = diagonal + 1)
       val ns: List[Node] = start.rightParent.map(n => Diagonal(n.row, diagonal).nodes).getOrElse(Nil)
@@ -28,24 +28,29 @@ case class Diagonal(row: Int, diagonal: Int) {
 }
 
 case class Node(row: Int, column: Int) {
-  def parents: (Option[Node], Option[Node]) = {
-    if (row == topRow) {
-      (None, None)
-    } else if (column == 1) {
-      (None, Some(Node(row = row - 1, column = 1)))
-    } else if (column == row + 1) {
-      (Some(Node(row = row - 1, column = row)), None)
+  private val previousRow = row - 1
+  private val previousColumn = column - 1
+
+  private val rowIsTop: Boolean = row == topRow
+  private val columnIsTheLast: Boolean = column == row + 1
+
+  def leftParent: Option[Node] =
+    if (rowIsTop || column == 1) {
+      None
+    } else if (columnIsTheLast) {
+      Some(Node(previousRow, column = row))
     } else {
-      (Some(Node(row = row - 1, column = column - 1)), Some(Node(row = row - 1, column = column)))
+      Some(Node(previousRow, previousColumn))
     }
-  }
 
-  def leftParent: Option[Node] = parents._1
+  def rightParent: Option[Node] =
+    if (rowIsTop || columnIsTheLast) {
+      None
+    } else {
+      Some(Node(previousRow, column))
+    }
 
-  def rightParent: Option[Node] = parents._2
+  def parents: Seq[Node] = Seq(leftParent, rightParent).flatten
 
-  def presentParents: Seq[Node] = Seq(parents._1, parents._2).flatten
-
-  def value: Int = presentParents.map(_.value).sum.max(1)
+  def value: Int = parents.map(_.value).sum.max(1)
 }
-
