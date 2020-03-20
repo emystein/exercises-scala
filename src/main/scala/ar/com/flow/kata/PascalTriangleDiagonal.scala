@@ -46,7 +46,7 @@ case class Node(coordinates: Coordinates) {
 
 object LeftParent {
   def of(coordinates: Coordinates): Option[Node] = {
-    PositionRelativeToEdges.of(CoordinatesPosition(coordinates)) match {
+    PositionRelativeToEdges.of(coordinates) match {
       case Top() | LeftEdge() => None
       case RightEdge()        => Some(Node(coordinates.previousRow, column = coordinates.row))
       case _                  => Some(Node(coordinates.previousRow, coordinates.previousColumn))
@@ -56,21 +56,16 @@ object LeftParent {
 
 object RightParent {
   def of(coordinates: Coordinates): Option[Node] = {
-    PositionRelativeToEdges.of(CoordinatesPosition(coordinates)) match {
+    PositionRelativeToEdges.of(coordinates) match {
       case Top() | RightEdge() => None
       case _                   => Some(Node(coordinates.previousRow, coordinates.column))
     }
   }
 }
+
 case class Coordinates(row: Int, column: Int) {
   val previousRow = row - 1
   val previousColumn = column - 1
-}
-
-case class CoordinatesPosition(coordinates: Coordinates) {
-  val isTop: Boolean = coordinates.row == topRow
-  val isLeftEdge: Boolean = coordinates.column == 1
-  val isRightEdge: Boolean = coordinates.column == coordinates.row + 1
 }
 
 sealed abstract class PositionRelativeToEdges extends Product with Serializable
@@ -85,15 +80,12 @@ object PositionRelativeToEdges {
 
   final case class Inside() extends PositionRelativeToEdges
 
-  def of(coordinatesPosition: CoordinatesPosition): PositionRelativeToEdges = {
-    if (coordinatesPosition.isTop) {
-      Top()
-    } else if (coordinatesPosition.isLeftEdge) {
-      LeftEdge()
-    } else if (coordinatesPosition.isRightEdge) {
-      RightEdge()
-    } else {
-      Inside()
+  def of(coordinates: Coordinates): PositionRelativeToEdges = {
+    coordinates match {
+      case Coordinates(`topRow`, _)                      => Top()
+      case Coordinates(_, 1)                             => LeftEdge()
+      case Coordinates(row, column) if column == row + 1 => RightEdge()
+      case _                                             => Inside()
     }
   }
 }
