@@ -28,29 +28,36 @@ case class Diagonal(row: Int, diagonal: Int) {
 }
 
 case class Node(row: Int, column: Int) {
-  private val previousRow = row - 1
-  private val previousColumn = column - 1
+  val previousRow = row - 1
+  val previousColumn = column - 1
+  val isInTheTopRow: Boolean = row == topRow
+  val isInTheLastColumn: Boolean = column == row + 1
 
-  private val rowIsTop: Boolean = row == topRow
-  private val columnIsTheLast: Boolean = column == row + 1
+  def leftParent: Option[Node] = LeftParent.of(this)
 
-  def leftParent: Option[Node] =
-    if (rowIsTop || column == 1) {
-      None
-    } else if (columnIsTheLast) {
-      Some(Node(previousRow, column = row))
-    } else {
-      Some(Node(previousRow, previousColumn))
-    }
-
-  def rightParent: Option[Node] =
-    if (rowIsTop || columnIsTheLast) {
-      None
-    } else {
-      Some(Node(previousRow, column))
-    }
+  def rightParent: Option[Node] = RightParent.of(this)
 
   def parents: Seq[Node] = Seq(leftParent, rightParent).flatten
 
   def value: Int = parents.map(_.value).sum.max(1)
+}
+
+object LeftParent {
+  def of(node: Node): Option[Node] =
+    if (node.isInTheTopRow || node.column == 1) {
+      None
+    } else if (node.isInTheLastColumn) {
+      Some(Node(node.previousRow, column = node.row))
+    } else {
+      Some(Node(node.previousRow, node.previousColumn))
+    }
+}
+
+object RightParent {
+  def of(node: Node): Option[Node] =
+    if (node.isInTheTopRow || node.isInTheLastColumn) {
+      None
+    } else {
+      Some(Node(node.previousRow, node.column))
+    }
 }
