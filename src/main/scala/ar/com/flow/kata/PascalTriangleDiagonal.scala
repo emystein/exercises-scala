@@ -1,4 +1,31 @@
-package ar.com.flow.kata.pascaltriangle
+package ar.com.flow.kata
+
+import PascalTriangle.topRow
+
+object PascalTriangle {
+  val topRow: Int = 0
+}
+
+object Diagonal {
+  def diagonal(n: Int, p: Int): BigInt = {
+    Diagonal(n, p).sum
+  }
+}
+
+case class Diagonal(row: Int, diagonal: Int) {
+  def nodes: List[Node] =
+    if (row == topRow && diagonal != 0) {
+      List.empty
+    } else if (row == topRow) {
+      List(Node(row = topRow, column = 1))
+    } else {
+      val start = Node(row, column = diagonal + 1)
+      val ns: List[Node] = start.rightParent.map(n => Diagonal(n.row, diagonal).nodes).getOrElse(Nil)
+      start :: ns
+    }
+
+  def sum: Int = nodes.map(_.value).sum
+}
 
 case class Node(row: Int, column: Int) {
   def parents: (Option[Node], Option[Node]) = {
@@ -19,7 +46,6 @@ case class Node(row: Int, column: Int) {
 
   def presentParents: Seq[Node] = Seq(parents._1, parents._2).flatten
 
-  def isEdge: Boolean = presentParents.size < 2
-
   def value: Int = presentParents.map(_.value).sum.max(1)
 }
+
