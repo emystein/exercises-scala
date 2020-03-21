@@ -76,5 +76,27 @@ class DiagonalTest extends WordSpec with Matchers {
       }
     }
   }
+  "Diagonal sum" when {
+    "Row is 20, Diagonal is 3" should {
+      "be 5985" in {
+        Diagonal(row = 20, diagonal = 3).sum shouldBe 5985
+      }
+    }
+    "Row is 20, Diagonal is 4" should {
+      "be 20349" in {
+        Diagonal(row = 20, diagonal = 4).sum shouldBe 20349
+      }
+    }
+    "Row is 20, Diagonal is 5" should {
+      "be 54264" in {
+        Diagonal(row = 20, diagonal = 5).sum shouldBe 54264
+      }
+    }
+    "Row is 20, Diagonal is 15" should {
+      "be 20349" in {
+        Diagonal(row = 20, diagonal = 15).sum shouldBe 20349
+      }
+    }
+  }
 }
 
