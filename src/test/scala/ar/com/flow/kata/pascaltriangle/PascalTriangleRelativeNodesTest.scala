@@ -1,4 +1,4 @@
-package ar.com.flow.kata
+package ar.com.flow.kata.pascaltriangle
 
 import org.scalatest.{Matchers, WordSpec}
 

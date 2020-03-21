@@ -1,6 +1,6 @@
-package ar.com.flow.kata
+package ar.com.flow.kata.pascaltriangle
 
-import ar.com.flow.kata.PascalTriangle.topRow
+import ar.com.flow.kata.pascaltriangle.PascalTriangle.topRow
 import org.scalatest._
 
 class PascalTriangleDiagonalTest extends WordSpec with Matchers {
@@ -46,11 +46,6 @@ class PascalTriangleDiagonalTest extends WordSpec with Matchers {
     val row2Column2Node = Node(row = topRow + 1, column = 2)
     val row3Column2Node = Node(row = topRow + 2, column = 2)
     val row4Column2Node = Node(row = topRow + 3, column = 2)
-    "Row is topRow" should {
-      "be Nil" in {
-        Diagonal(row = topRow, diagonal = 1).nodes shouldBe Nil
-      }
-    }
     "Row is 1" should {
       "be (topRow + 1, 2)" in {
         Diagonal(row = topRow + 1, diagonal = 1).nodes shouldBe List(row2Column2Node)
@@ -70,11 +65,6 @@ class PascalTriangleDiagonalTest extends WordSpec with Matchers {
   "Diagonal 2" when {
     val row3Column3Node = Node(row = topRow + 2, column = 3)
     val row4Column3Node = Node(row = topRow + 3, column = 3)
-    "Row is topRow" should {
-      "be Nil" in {
-        Diagonal(row = topRow, diagonal = 2).nodes shouldBe Nil
-      }
-    }
     "Row is 3" should {
       "be (topRow + 2, 3)" in {
         Diagonal(row = topRow + 2, diagonal = 2).nodes shouldBe List(row3Column3Node)

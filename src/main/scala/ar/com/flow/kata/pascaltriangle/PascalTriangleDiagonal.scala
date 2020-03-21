@@ -1,9 +1,13 @@
-package ar.com.flow.kata
+package ar.com.flow.kata.pascaltriangle
 
-// https://www.codewars.com/kata/559b8e46fa060b2c6a0000bf
-
-import ar.com.flow.kata.PascalTriangle.topRow
-import ar.com.flow.kata.PositionRelativeToEdges.{LeftEdge, RightEdge, Top}
+/**
+  * Pascal Triangle diagonal sum kata: https://www.codewars.com/kata/559b8e46fa060b2c6a0000bf
+  *
+  * This solution doesn't comply with performance requirements defined by Codewars.
+  * However, I implemented the kata this way as an OOP exercise.
+  */
+import ar.com.flow.kata.pascaltriangle.PascalTriangle.topRow
+import ar.com.flow.kata.pascaltriangle.PositionRelativeToEdges.{LeftEdge, RightEdge, Top}
 
 object PascalTriangle {
   val topRow: Int = 0
@@ -16,14 +20,11 @@ object Diagonal {
 }
 
 case class Diagonal(row: Int, diagonal: Int) {
-  def nodes: List[Node] =
-    if (row == topRow && diagonal != 0) {
-      List.empty
-    } else {
-      val start = Node(row, column = diagonal + 1)
-      val upperNodes = start.rightParent.map(n => Diagonal(n.coordinates.row, diagonal).nodes).getOrElse(Nil)
-      start :: upperNodes
-    }
+  def nodes: List[Node] = {
+    val start = Node(row, column = diagonal + 1)
+    val upperNodes = start.rightParent.map(node => Diagonal(node.coordinates.row, diagonal)).map(_.nodes).getOrElse(Nil)
+    start :: upperNodes
+  }
 
   def sum: Int = nodes.map(_.value).sum
 }

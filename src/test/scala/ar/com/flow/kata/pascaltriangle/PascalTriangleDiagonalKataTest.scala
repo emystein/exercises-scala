@@ -1,7 +1,5 @@
-package ar.com.flow.kata
+package ar.com.flow.kata.pascaltriangle
 
-import ar.com.flow.kata.PascalTriangleDiagonalKataTest.testing
-import org.scalatest.Assertions.assertResult
 import org.scalatest.{FlatSpec, Matchers}
 
 class PascalTriangleDiagonalKataTest extends FlatSpec with Matchers {
@@ -11,9 +9,7 @@ class PascalTriangleDiagonalKataTest extends FlatSpec with Matchers {
     testing(20, 5, 54264)
     testing(20, 15, 20349)
   }
-}
 
-object PascalTriangleDiagonalKataTest {
   private def testing(n: Int, p: Int, expect: BigInt): Unit = {
     println("Testing: " + n + ", " + p)
     val actual: BigInt = Diagonal.diagonal(n, p)

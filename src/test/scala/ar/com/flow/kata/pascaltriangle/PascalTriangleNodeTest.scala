@@ -1,6 +1,6 @@
-package ar.com.flow.kata
+package ar.com.flow.kata.pascaltriangle
 
-import ar.com.flow.kata.PascalTriangle.topRow
+import ar.com.flow.kata.pascaltriangle.PascalTriangle.topRow
 import org.scalatest.{Matchers, WordSpec}
 
 class PascalTriangleNodeTest extends WordSpec with Matchers {

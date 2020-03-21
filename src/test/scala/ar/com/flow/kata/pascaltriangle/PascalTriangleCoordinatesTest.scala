@@ -1,7 +1,7 @@
-package ar.com.flow.kata
+package ar.com.flow.kata.pascaltriangle
 
-import ar.com.flow.kata.PascalTriangle.topRow
-import ar.com.flow.kata.PositionRelativeToEdges.{Internal, LeftEdge, RightEdge, Top}
+import ar.com.flow.kata.pascaltriangle.PascalTriangle.topRow
+import ar.com.flow.kata.pascaltriangle.PositionRelativeToEdges.{Internal, LeftEdge, RightEdge, Top}
 import org.scalatest.{Matchers, WordSpec}
 
 class PascalTriangleCoordinatesTest extends WordSpec with Matchers {
