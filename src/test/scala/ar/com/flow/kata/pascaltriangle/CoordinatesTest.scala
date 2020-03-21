@@ -4,7 +4,7 @@ import ar.com.flow.kata.pascaltriangle.PascalTriangle.topRow
 import ar.com.flow.kata.pascaltriangle.PositionRelativeToEdges.{Internal, LeftEdge, RightEdge, Top}
 import org.scalatest.{Matchers, WordSpec}
 
-class PascalTriangleCoordinatesTest extends WordSpec with Matchers {
+class CoordinatesTest extends WordSpec with Matchers {
   "Coordinates" when {
     "Row 1, Column 1" should {
       "have upperRow equal to 0" in {

@@ -2,7 +2,7 @@ package ar.com.flow.kata.pascaltriangle
 
 import org.scalatest.{Matchers, WordSpec}
 
-class PascalTriangleRelativeNodesTest extends WordSpec with Matchers {
+class RelativeNodesTest extends WordSpec with Matchers {
   val coordinates32 = Coordinates(3, 2)
 
   "Upper Row, Same Column relative Node" when {

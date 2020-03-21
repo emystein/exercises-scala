@@ -2,7 +2,7 @@ package ar.com.flow.kata.pascaltriangle
 
 import org.scalatest.{FlatSpec, Matchers}
 
-class PascalTriangleDiagonalKataTest extends FlatSpec with Matchers {
+class DiagonalKataTest extends FlatSpec with Matchers {
   it should "pass basic tests" in {
     testing(20, 3, 5985)
     testing(20, 4, 20349)

@@ -3,7 +3,7 @@ package ar.com.flow.kata.pascaltriangle
 import ar.com.flow.kata.pascaltriangle.PascalTriangle.topRow
 import org.scalatest.{Matchers, WordSpec}
 
-class PascalTriangleNodeTest extends WordSpec with Matchers {
+class NodeTest extends WordSpec with Matchers {
   "Node" when {
     "is top" should {
       val topNode = Node(row = topRow, column = 1)

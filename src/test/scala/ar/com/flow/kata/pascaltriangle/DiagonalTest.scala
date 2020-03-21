@@ -3,7 +3,7 @@ package ar.com.flow.kata.pascaltriangle
 import ar.com.flow.kata.pascaltriangle.PascalTriangle.topRow
 import org.scalatest._
 
-class PascalTriangleDiagonalTest extends WordSpec with Matchers {
+class DiagonalTest extends WordSpec with Matchers {
   "Diagonal 0" when {
     val topRowDiagonal0 = Diagonal(row = topRow, diagonal = 0)
     "Row is topRow" should {
