@@ -14,7 +14,7 @@ class PascalTriangleNodeTest extends WordSpec with Matchers {
       }
     }
     "is in second row first column" should {
-      "return parents (None, (topRow, 1))" in {
+      "return parents (topRow, 1)" in {
         val node = Node(row = topRow + 1, column = 1)
 
         node.leftParent shouldBe None
@@ -22,7 +22,7 @@ class PascalTriangleNodeTest extends WordSpec with Matchers {
       }
     }
     "is in second row, second column" should {
-      "return parents ((topRow, 1), None)" in {
+      "return parents (topRow, 1)" in {
         val node = Node(row = topRow + 1, column = 2)
 
         node.leftParent shouldBe Some(Node(row = node.coordinates.previousRow, column = 1))
@@ -30,7 +30,7 @@ class PascalTriangleNodeTest extends WordSpec with Matchers {
       }
     }
     "is in third row, first column" should {
-      "return parents (None, (topRow + 1, 1))" in {
+      "return parents (topRow + 1, 1)" in {
         val node = Node(row = topRow + 2, column = 1)
 
         node.leftParent shouldBe None
@@ -38,7 +38,7 @@ class PascalTriangleNodeTest extends WordSpec with Matchers {
       }
     }
     "is in third row, second column" should {
-      "return parents ((topRow + 1, 1), (topRow + 1, 2)))" in {
+      "return parents (topRow + 1, 1), (topRow + 1, 2)" in {
         val node = Node(row = topRow + 2, column = 2)
 
         node.leftParent shouldBe Some(Node(row = node.coordinates.previousRow, column = 1))
@@ -46,7 +46,7 @@ class PascalTriangleNodeTest extends WordSpec with Matchers {
       }
     }
     "is in third row, third column" should {
-      "return parents ((topRow + 1, 2), None))" in {
+      "return parents (topRow + 1, 2)" in {
         val node = Node(row = topRow + 2, column = 3)
 
         node.leftParent shouldBe Some(Node(row = node.coordinates.previousRow, column = 2))
@@ -54,7 +54,7 @@ class PascalTriangleNodeTest extends WordSpec with Matchers {
       }
     }
     "is in fourth row, first column" should {
-      "return parents (None, (topRow + 2, 1))" in {
+      "return parents (topRow + 2, 1)" in {
         val node = Node(row = topRow + 3, column = 1)
 
         node.leftParent shouldBe None
@@ -62,7 +62,7 @@ class PascalTriangleNodeTest extends WordSpec with Matchers {
       }
     }
     "is in fourth row, fourth column" should {
-      "return parents ((topRow + 2, 3), None)" in {
+      "return parents (topRow + 2, 3)" in {
         val node = Node(row = topRow + 3, column = 4)
 
         node.leftParent shouldBe Some(Node(row = node.coordinates.previousRow, column = 3))
