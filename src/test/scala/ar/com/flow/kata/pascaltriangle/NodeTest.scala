@@ -2,139 +2,53 @@ package ar.com.flow.kata.pascaltriangle
 
 import ar.com.flow.kata.pascaltriangle.PascalTriangle.topRow
 import org.scalatest.{Matchers, WordSpec}
+import org.scalatest.prop.TableDrivenPropertyChecks._
 
 class NodeTest extends WordSpec with Matchers {
-  "Node" when {
-    "is top" should {
-      val topNode = Node(row = topRow, column = 1)
+  "Left Parent, Right Parent" in {
+    val table = Table(
+      ("row", "column", "leftParent", "rightParent"),
+      (topRow, 1, None, None),
+      (topRow + 1, 1, None, Some(Node(topRow, 1))),
+      (topRow + 1, 2, Some(Node(topRow, 1)), None),
+      (topRow + 2, 1, None, Some(Node(topRow + 1, 1))),
+      (topRow + 2, 2, Some(Node(topRow + 1, 1)), Some(Node(topRow + 1, 2))),
+      (topRow + 2, 3, Some(Node(topRow + 1, 2)), None),
+      (topRow + 3, 1, None, Some(Node(topRow + 2, 1))),
+      (topRow + 3, 4, Some(Node(topRow + 2, 3)), None),
+    )
 
-      "return no parents" in {
-        topNode.leftParent shouldBe None
-        topNode.rightParent shouldBe None
-      }
-    }
-    "is in second row first column" should {
-      "return parents (topRow, 1)" in {
-        val node = Node(row = topRow + 1, column = 1)
-
-        node.leftParent shouldBe None
-        node.rightParent shouldBe Some(Node(row = node.coordinates.upperRow, column = 1))
-      }
-    }
-    "is in second row, second column" should {
-      "return parents (topRow, 1)" in {
-        val node = Node(row = topRow + 1, column = 2)
-
-        node.leftParent shouldBe Some(Node(row = node.coordinates.upperRow, column = 1))
-        node.rightParent shouldBe None
-      }
-    }
-    "is in third row, first column" should {
-      "return parents (topRow + 1, 1)" in {
-        val node = Node(row = topRow + 2, column = 1)
-
-        node.leftParent shouldBe None
-        node.rightParent shouldBe Some(Node(row = node.coordinates.upperRow, column = 1))
-      }
-    }
-    "is in third row, second column" should {
-      "return parents (topRow + 1, 1), (topRow + 1, 2)" in {
-        val node = Node(row = topRow + 2, column = 2)
-
-        node.leftParent shouldBe Some(Node(row = node.coordinates.upperRow, column = 1))
-        node.rightParent shouldBe Some(Node(row = node.coordinates.upperRow, column = 2))
-      }
-    }
-    "is in third row, third column" should {
-      "return parents (topRow + 1, 2)" in {
-        val node = Node(row = topRow + 2, column = 3)
-
-        node.leftParent shouldBe Some(Node(row = node.coordinates.upperRow, column = 2))
-        node.rightParent shouldBe None
-      }
-    }
-    "is in fourth row, first column" should {
-      "return parents (topRow + 2, 1)" in {
-        val node = Node(row = topRow + 3, column = 1)
-
-        node.leftParent shouldBe None
-        node.rightParent shouldBe Some(Node(row = node.coordinates.upperRow, column = 1))
-      }
-    }
-    "is in fourth row, fourth column" should {
-      "return parents (topRow + 2, 3)" in {
-        val node = Node(row = topRow + 3, column = 4)
-
-        node.leftParent shouldBe Some(Node(row = node.coordinates.upperRow, column = 3))
-        node.rightParent shouldBe None
-      }
+    forAll(table) { (row: Int, column: Int, leftParent: Option[Node], rightParent: Option[Node]) =>
+      val node = Node(row, column)
+      node.leftParent shouldBe leftParent
+      node.rightParent shouldBe rightParent
     }
   }
-  "Value" when {
-    "Top Node" should {
-      "be 1" in {
-        val topNode = Node(row = topRow, column = 1)
+  "Parents" in {
+    val table = Table(
+      ("row", "column", "expected"),
+      (topRow, 1, Nil),
+      (topRow + 1, 1, List(Node(topRow, 1))),
+      (topRow + 1, 2, List(Node(topRow, 1))),
+      (topRow + 2, 2, List(Node(topRow + 1, 1), Node(topRow + 1, 2))),
+    )
 
-        topNode.value shouldBe 1
-      }
-    }
-    "Node has no left parent" should {
-      "be 1" in {
-        val node = Node(row = topRow + 1, column = 1)
-
-        node.value shouldBe 1
-      }
-    }
-    "Node has no right parent" should {
-      "be 1" in {
-        val node = Node(row = topRow + 1, column = 2)
-
-        node.value shouldBe 1
-      }
-    }
-    "Node (topRow + 2, 1)" should {
-      "be 2" in {
-        val node = Node(row = topRow + 2, column = 2)
-
-        node.value shouldBe 2
-      }
-    }
-    "Node (topRow + 3, 2)" should {
-      "be 3" in {
-        val node = Node(row = topRow + 3, column = 2)
-
-        node.value shouldBe 3
-      }
+    forAll(table) { (row: Int, column: Int, expected: List[Node]) =>
+      Node(row, column).parents shouldBe expected
     }
   }
-  "Present Parents" when {
-    "Top Node" should {
-      "have no present parents" in {
-        val topNode = Node(row = topRow, column = 1)
+  "Value" in {
+    val table = Table(
+      ("row", "column", "expected"),
+      (topRow, 1, 1),
+      (topRow + 1, 1, 1),
+      (topRow + 1, 2, 1),
+      (topRow + 2, 2, 2),
+      (topRow + 3, 2, 3)
+    )
 
-        topNode.parents shouldBe Nil
-      }
-    }
-    "Node with no left parent and right parent" should {
-      "have one present parent" in {
-        val node = Node(row = topRow + 1, column = 1)
-
-        node.parents shouldBe Seq(Node(node.coordinates.upperRow, 1))
-      }
-    }
-    "Node with left parent and no right parent" should {
-      "have one present parent" in {
-        val node = Node(row = topRow + 1, column = 2)
-
-        node.parents shouldBe Seq(Node(node.coordinates.upperRow, 1))
-      }
-    }
-    "Node with both parents" should {
-      "have two present parents" in {
-        val node = Node(row = topRow + 2, column = 2)
-
-        node.parents shouldBe Seq(Node(row = node.coordinates.upperRow, column = 1), Node(row = node.coordinates.upperRow, column = 2))
-      }
+    forAll(table) { (row: Int, column: Int, expected: Int) =>
+      Node(row, column).value shouldBe expected
     }
   }
 }
