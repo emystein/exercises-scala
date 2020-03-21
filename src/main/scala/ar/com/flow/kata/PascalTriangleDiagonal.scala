@@ -21,8 +21,8 @@ case class Diagonal(row: Int, diagonal: Int) {
       List.empty
     } else {
       val start = Node(row, column = diagonal + 1)
-      val ns: List[Node] = start.rightParent.map(n => Diagonal(n.coordinates.row, diagonal).nodes).getOrElse(Nil)
-      start :: ns
+      val upperNodes = start.rightParent.map(n => Diagonal(n.coordinates.row, diagonal).nodes).getOrElse(Nil)
+      start :: upperNodes
     }
 
   def sum: Int = nodes.map(_.value).sum
@@ -48,8 +48,8 @@ object LeftParent {
   def of(coordinates: Coordinates): Option[Node] = {
     PositionRelativeToEdges.of(coordinates) match {
       case Top() | LeftEdge() => None
-      case RightEdge()        => PreviousRightMostColumnNode.from(coordinates)
-      case _                  => PreviousRowPreviousColumnNode.from(coordinates)
+      case RightEdge()        => Some(UpperRowRightMostColumnNode.from(coordinates))
+      case _                  => Some(UpperRowLeftColumnNode.from(coordinates))
     }
   }
 }
@@ -58,32 +58,32 @@ object RightParent {
   def of(coordinates: Coordinates): Option[Node] = {
     PositionRelativeToEdges.of(coordinates) match {
       case Top() | RightEdge() => None
-      case _                   => PreviousRowSameColumnNode.from(coordinates)
+      case _                   => Some(UpperRowSameColumnNode.from(coordinates))
     }
   }
 }
 
-object PreviousRowSameColumnNode {
-  def from(coordinates: Coordinates): Option[Node] = {
-    Some(Node(coordinates.previousRow, coordinates.column))
+object UpperRowSameColumnNode {
+  def from(coordinates: Coordinates): Node = {
+    Node(coordinates.upperRow, coordinates.column)
   }
 }
 
-object PreviousRightMostColumnNode {
-  def from(coordinates: Coordinates): Option[Node] = {
-    Some(Node(coordinates.previousRow, coordinates.row))
+object UpperRowRightMostColumnNode {
+  def from(coordinates: Coordinates): Node = {
+    Node(coordinates.upperRow, coordinates.row)
   }
 }
 
-object PreviousRowPreviousColumnNode {
-  def from(coordinates: Coordinates): Option[Node] = {
-    Some(Node(coordinates.previousRow, coordinates.previousColumn))
+object UpperRowLeftColumnNode {
+  def from(coordinates: Coordinates): Node = {
+    Node(coordinates.upperRow, coordinates.leftColumn)
   }
 }
 
 case class Coordinates(row: Int, column: Int) {
-  val previousRow = row - 1
-  val previousColumn = column - 1
+  val upperRow: Int = row - 1
+  val leftColumn: Int = column - 1
 }
 
 sealed abstract class PositionRelativeToEdges extends Product with Serializable
@@ -96,14 +96,14 @@ object PositionRelativeToEdges {
 
   final case class RightEdge() extends PositionRelativeToEdges
 
-  final case class Inside() extends PositionRelativeToEdges
+  final case class Internal() extends PositionRelativeToEdges
 
   def of(coordinates: Coordinates): PositionRelativeToEdges = {
     coordinates match {
       case Coordinates(`topRow`, _)                      => Top()
       case Coordinates(_, 1)                             => LeftEdge()
       case Coordinates(row, column) if column == row + 1 => RightEdge()
-      case _                                             => Inside()
+      case _                                             => Internal()
     }
   }
 }
