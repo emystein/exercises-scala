@@ -13,12 +13,6 @@ object PascalTriangle {
   val topRow: Int = 0
 }
 
-object Diagonal {
-  def diagonal(n: Int, p: Int): BigInt = {
-    Diagonal(n, p).sum
-  }
-}
-
 case class Diagonal(row: Int, diagonal: Int) {
   def nodes: List[Node] = {
     val start = Node(row, column = diagonal + 1)
