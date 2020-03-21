@@ -48,7 +48,7 @@ object LeftParent {
   def of(coordinates: Coordinates): Option[Node] = {
     PositionRelativeToEdges.of(coordinates) match {
       case Top() | LeftEdge() => None
-      case RightEdge()        => PreviousRowSameColumnNode.from(coordinates)
+      case RightEdge()        => PreviousRightMostColumnNode.from(coordinates)
       case _                  => PreviousRowPreviousColumnNode.from(coordinates)
     }
   }
@@ -66,6 +66,12 @@ object RightParent {
 object PreviousRowSameColumnNode {
   def from(coordinates: Coordinates): Option[Node] = {
     Some(Node(coordinates.previousRow, coordinates.column))
+  }
+}
+
+object PreviousRightMostColumnNode {
+  def from(coordinates: Coordinates): Option[Node] = {
+    Some(Node(coordinates.previousRow, coordinates.row))
   }
 }
 
