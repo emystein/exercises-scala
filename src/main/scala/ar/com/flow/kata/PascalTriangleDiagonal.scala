@@ -35,9 +35,9 @@ object Node {
 }
 
 case class Node(coordinates: Coordinates) {
-  def leftParent: Option[Node] = LeftParent.of(coordinates)
+  def leftParent: Option[Node] = LeftParent(coordinates)
 
-  def rightParent: Option[Node] = RightParent.of(coordinates)
+  def rightParent: Option[Node] = RightParent(coordinates)
 
   def parents: Seq[Node] = Seq(leftParent, rightParent).flatten
 
@@ -45,21 +45,33 @@ case class Node(coordinates: Coordinates) {
 }
 
 object LeftParent {
-  def of(coordinates: Coordinates): Option[Node] = {
+  def apply(coordinates: Coordinates): Option[Node] = {
     PositionRelativeToEdges.of(coordinates) match {
       case Top() | LeftEdge() => None
-      case RightEdge()        => Some(Node(coordinates.previousRow, column = coordinates.row))
-      case _                  => Some(Node(coordinates.previousRow, coordinates.previousColumn))
+      case RightEdge()        => PreviousRowSameColumnNode(coordinates)
+      case _                  => PreviousRowPreviousColumnNode(coordinates)
     }
   }
 }
 
 object RightParent {
-  def of(coordinates: Coordinates): Option[Node] = {
+  def apply(coordinates: Coordinates): Option[Node] = {
     PositionRelativeToEdges.of(coordinates) match {
       case Top() | RightEdge() => None
-      case _                   => Some(Node(coordinates.previousRow, coordinates.column))
+      case _                   => PreviousRowSameColumnNode(coordinates)
     }
+  }
+}
+
+object PreviousRowSameColumnNode {
+  def apply(coordinates: Coordinates): Option[Node] = {
+    Some(Node(coordinates.previousRow, coordinates.column))
+  }
+}
+
+object PreviousRowPreviousColumnNode {
+  def apply(coordinates: Coordinates): Option[Node] = {
+    Some(Node(coordinates.previousRow, coordinates.previousColumn))
   }
 }
 
